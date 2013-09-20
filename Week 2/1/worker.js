@@ -7,18 +7,16 @@ process.on('message', function(m, socket) {
 
   for (var i = 0; i < t.length; i++) {
     var c = t[i];
-    for (var j = 0; j < l.length; j++) {
+      for (var j = 0; j < l.length; j++) {
       var w1 = l[j];
       for (var k = 0; k < r.length; k++) {
         var w2 = r[k];
-        if (cache[c] !== true) {
-          if (w1 + w2 == c) {
-            results.push([w1, w2, c]);
-            cache[c] = true;
-          } else if (w2 + w1 == c) {
-            results.push([w2, w1, c]);
-            cache[c] = true;
-          }
+        if (w1 + w2 == c && !cache[c]) {
+          results.push([w1, w2, c]);
+          cache[c] = true;
+        } else if (w2 + w1 == c && !cache[c]) {
+          results.push([w2, w1, c]);
+          cache[c] = true;
         }
       }
     }

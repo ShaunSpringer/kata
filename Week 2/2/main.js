@@ -15,8 +15,10 @@ readline.createInterface({
     return;
   }
 
-  wordMap[len] = wordMap[len] || [];
-  wordMap[len].push(word);
+  var first = word[0];
+  wordMap[len] = wordMap[len] || {};
+  wordMap[len][first] = wordMap[len][first] || [];
+  wordMap[len][first].push(word);
 
 }).on ('close', function (){
   findWords();
@@ -32,7 +34,7 @@ var handleResults = function(m, socket) {
 
 var findWords = function() {
   var targets = wordMap[TARGET_LENGTH];
-  var len = TARGET_LENGTH / 2;
+  var len = TARGET_LENGTH >> 1;
 
   for (var i = 1; i < len; i++) {
     var worker = child.fork('worker.js');
