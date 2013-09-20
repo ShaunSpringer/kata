@@ -9,7 +9,6 @@ process.on('message', function(m, socket) {
   var arr = [];
 
   var findMatches = function(a, b, word, cache) {
-    console.log(a,b)
     if (!a || !b) return;
 
     var res = [];
@@ -34,14 +33,17 @@ process.on('message', function(m, socket) {
       var c = t0[i];
       var f1 = c[0];
       var f2 = c[len1];
+      var f3 = c[len2];
 
       var res1 = findMatches(l[f1], r[f2], c, {});
-      if (!res1) continue;
-      results = results.concat(res1.results)
+      if (res1) {
+        results = results.concat(res1.results);
+      }
 
-      var res2 = findMatches(l[f2], r[f1], c, {});
-      if (!res2) continue;
-      results = results.concat(res2.results);
+      var res2 = findMatches(r[f1], l[f3], c, res1 ? res1.tracker : {});
+      if (res2) {
+        results = results.concat(res2.results);
+      }
     }
   }
 
