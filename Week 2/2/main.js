@@ -37,14 +37,15 @@ var findWords = function() {
   var len = TARGET_LENGTH >> 1;
 
   for (var i = 1; i < len; i++) {
+    //if (i !== 2) continue
     var worker = child.fork('worker.js');
     worker.on('message', handleResults);
-    worker.send({ words: [wordMap[i], wordMap[TARGET_LENGTH - i]], targets: targets });
+    worker.send({ words: [wordMap[i], wordMap[TARGET_LENGTH - i]], lengths: [i, TARGET_LENGTH - i], targets: targets });
   }
 
   if (len % 2 !== 0) {
     var worker = child.fork('worker.js');
     worker.on('message', handleResults);
-    worker.send({ words: [wordMap[len], wordMap[len]], targets: targets });
+    worker.send({ words: [wordMap[len], wordMap[len]], lengths: [len, len], targets: targets });
   }
 };
