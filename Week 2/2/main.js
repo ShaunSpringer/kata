@@ -1,6 +1,6 @@
 var fs = require('fs');
 var readline = require('readline');
-var child = require('child_process')
+var child = require('child_process');
 
 var TARGET_LENGTH = 6;
 var wordMap = {};
@@ -26,7 +26,7 @@ readline.createInterface({
 
 var total = 0;
 var handleResults = function(m, socket) {
-  console.log(m);
+  //console.log(m);
 
   total += m.length;
   console.log(total);
